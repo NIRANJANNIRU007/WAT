@@ -31,7 +31,7 @@ def initialize():
     st.session_state.timer = 0
     st.session_state.data = {}
     st.session_state.end = int(st.session_state.count) + int(st.session_state.total)
-    i = 1
+    i = 0
     for row in rows:
         if i >= st.session_state.count:
             st.session_state.data[row.words] = ''
