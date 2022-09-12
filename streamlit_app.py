@@ -65,6 +65,7 @@ def update_data():
         st.session_state.timer.append(int((time.time() - st.session_state.start_time)))
         st.session_state.data[st.session_state.word] = st.session_state.statement
         st.session_state.word = list(st.session_state.data.keys())[st.session_state.current]
+        st.session_state.statement = ''
         generate_ques()
     else:
         st.session_state.timer.append(int((time.time() - st.session_state.start_time)))
