@@ -29,6 +29,7 @@ def initialize():
     if 'count' not in st.session_state:
         st.session_state.count = 1
     st.session_state.timer = 0
+    st.session_state.user = st.session_state.name
     st.session_state.data = {}
     st.session_state.end = int(st.session_state.count) + int(st.session_state.total)
     i = 0
@@ -42,22 +43,32 @@ def initialize():
     st.session_state.end = st.session_state.total
     st.session_state.word = list(st.session_state.data.keys())[st.session_state.count]
     st.session_state.started = True
+    st.session_state.timer = []
 
 
 def generate_results():
     st.title("Word Association Test - 20 Seconds")
+    i= 0
     for key, value in st.session_state.data.items():
-        st.write(key, " : ", value)
+        st.write(key, " : ", value, " - ", st.session_state.timer[i])
+        i = i + 1
+    timer = st.session_state.timer
+    st.write("Thanks for taking test ", st.session_state.user)
+    st.write("Total Time Taken : ", sum(timer))
+    st.write(" Total Time Allotted: ", 20 * len(timer))
+    st.write("Average Time Taken : ", sum(timer) / len(timer))
 
 
 def update_data():
     if st.session_state.current < st.session_state.end:
         st.session_state.current += 1
-        st.session_state.timer = 0
+        st.session_state.timer.append(int((time.time() - st.session_state.start_time)))
         st.session_state.data[st.session_state.word] = st.session_state.statement
         st.session_state.word = list(st.session_state.data.keys())[st.session_state.current]
         generate_ques()
     else:
+        st.session_state.timer.append(int((time.time() - st.session_state.start_time)))
+        st.session_state.data[st.session_state.word] = st.session_state.statement
         generate_results()
 
 
